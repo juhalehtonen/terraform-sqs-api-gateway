@@ -127,7 +127,7 @@ resource "aws_api_gateway_method_settings" "webhook_demo_post_method_settings" {
   stage_name  = "${aws_api_gateway_stage.myapp_deployment_stage.stage_name}"
   method_path = "${aws_api_gateway_resource.webhook_demo_resource.path_part}/${aws_api_gateway_method.webhook_demo_post_method.http_method}"
 
-  # This works with true, but Cloudwatch must be enabled first on an account level
+  # Logging works fine, but Cloudwatch must be enabled first on an account level
   settings {
     metrics_enabled = false
     logging_level   = "OFF"
