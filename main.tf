@@ -84,14 +84,6 @@ resource "aws_wafregional_web_acl_association" "association" {
   web_acl_id   = "${aws_wafregional_web_acl.foo.id}"
 }
 
-/*
-rror: Error Updating WAF Regional ACL: WAFNonexistentItemException: The referenced item does not exist.
-
-  on main.tf line 61, in resource "aws_wafregional_web_acl" "foo":
-  61: resource "aws_wafregional_web_acl" "foo" {
-*/
-
-
 
 // ******************** SQS SETUP ******************** //
 resource "aws_sqs_queue" "myapp_sqs_queue" {
