@@ -271,7 +271,7 @@ resource "aws_iam_role_policy_attachment" "terraform_apig_sqs_policy_attach" {
 
 ## Setup the stages and deploy to the stage when terraform is run.
 resource "aws_api_gateway_stage" "myapp_deployment_stage" {
-  stage_name    = "dev-temp" // This a hack to fix the API being auto deployed.
+  stage_name    = "dev" // This a hack to fix the API being auto deployed.
   rest_api_id   = "${aws_api_gateway_rest_api.myapp_apig.id}"
   deployment_id = "${aws_api_gateway_deployment.myapp_deployment.id}"
 }
@@ -279,7 +279,7 @@ resource "aws_api_gateway_stage" "myapp_deployment_stage" {
 resource "aws_api_gateway_deployment" "myapp_deployment" {
   depends_on = [aws_api_gateway_integration.webhook_demo_post_integration]
   rest_api_id     = "${aws_api_gateway_rest_api.myapp_apig.id}"
-  stage_name      = "dev"
+  stage_name      = ""
 }
 
 # Output our important values
