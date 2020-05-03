@@ -1,6 +1,6 @@
 # Amazon SQS & API Gateway Terraform demo
 
-Demo of how to use Terraform to manage a combination of AWS SQS and AWS API Gateway, with WAF in front of the Gateway.
+Demo of how to use Terraform to manage a combination of AWS SQS and AWS API Gateway, with WAF in front.
 
 ## Usage
 
