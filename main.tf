@@ -19,7 +19,7 @@
 # of people.
 # terraform {
 #   backend "s3" {
-#     region = "us-east-1"
+#     region = "eu-north-1"
 #     bucket = "BUCKET NAME HERE"
 #     key    = "KEY HERE"
 #   }
