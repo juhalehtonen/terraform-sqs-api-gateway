@@ -28,6 +28,7 @@
 # Variables
 variable "app_name" {
   type = string
+  default = "demo"
 }
 
 variable "region" {
@@ -47,6 +48,49 @@ locals {
 }
 
 data "aws_caller_identity" "current" {}
+
+// ******************** WAF SETUP ******************* //
+resource "aws_wafregional_rate_based_rule" "foo" {
+  name        = "tfWAFRule"
+  metric_name = "tfWAFRule"
+
+  rate_key   = "IP"
+  rate_limit = 1500
+}
+
+resource "aws_wafregional_web_acl" "foo" {
+  depends_on = [aws_wafregional_rate_based_rule.foo]
+  name        = "spam"
+  metric_name = "spam"
+
+  default_action {
+    type = "ALLOW"
+  }
+
+  rule {
+    action {
+      type = "BLOCK"
+    }
+
+    type = "RATE_BASED"
+    priority = 1
+    rule_id  = "${aws_wafregional_rate_based_rule.foo.id}"
+  }
+}
+
+resource "aws_wafregional_web_acl_association" "association" {
+  depends_on = [aws_wafregional_web_acl.foo]
+  resource_arn = "${aws_api_gateway_stage.myapp_deployment_stage.arn}"
+  web_acl_id   = "${aws_wafregional_web_acl.foo.id}"
+}
+
+/*
+rror: Error Updating WAF Regional ACL: WAFNonexistentItemException: The referenced item does not exist.
+
+  on main.tf line 61, in resource "aws_wafregional_web_acl" "foo":
+  61: resource "aws_wafregional_web_acl" "foo" {
+*/
+
 
 
 // ******************** SQS SETUP ******************** //
